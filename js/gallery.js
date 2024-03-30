@@ -64,13 +64,34 @@ const images = [
   },
 ];
 
-<li class="gallery-item">
-  <a class="gallery-link" href="large-image.jpg">
+const body = document.querySelector("body");
+const ulList = document.createElement("ul");
+ulList.classList.add("gallery");
+body.append(ulList);
+
+const newCode = images
+  .map((image) => {
+    return `<li class="gallery-item">
+  <a class="gallery-link" href="${image.original}">
     <img
       class="gallery-image"
-      src="small-image.jpg"
-      data-source="large-image.jpg"
-      alt="Image description"
+      src='${image.preview}'
+      data-source='${image.original}'
+      alt='${image.description}'
     />
   </a>
-</li>;
+</li>`;
+  })
+  .join("");
+
+ulList.innerHTML = newCode;
+console.log(ulList);
+
+ulList.addEventListener("click", (event) => {
+  event.preventDefault();
+  if (event.target.nodeName === "IMG") {
+    const source = event.target.dataset.source;
+    const instance = basicLightbox.create(`<img src="${source}">`);
+    instance.show();
+  }
+});
