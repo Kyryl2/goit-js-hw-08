@@ -67,25 +67,26 @@ const images = [
 const body = document.querySelector("body");
 const ulList = document.createElement("ul");
 ulList.classList.add("gallery");
-body.append(ulList);
+body.prepend(ulList);
 
-const newCode = images
-  .map((image) => {
-    return `<li class="gallery-item">
+function myFunction() {
+  return images
+    .map((image) => {
+      return `<li class="gallery-item">
   <a class="gallery-link" href="${image.original}">
     <img
       class="gallery-image"
-      src='${image.preview}'
-      data-source='${image.original}'
-      alt='${image.description}'
+      src="${image.preview}"
+      data-source="${image.original}"
+      alt="${image.description}"
     />
   </a>
 </li>`;
-  })
-  .join("");
+    })
+    .join("");
+}
 
-ulList.innerHTML = newCode;
-console.log(ulList);
+ulList.insertAdjacentHTML("afterbegin", myFunction());
 
 ulList.addEventListener("click", (event) => {
   event.preventDefault();
