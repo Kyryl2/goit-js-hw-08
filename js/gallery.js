@@ -87,12 +87,30 @@ function myFunction() {
 }
 
 ulList.insertAdjacentHTML("afterbegin", myFunction());
-
+let photo;
 ulList.addEventListener("click", (event) => {
   event.preventDefault();
   if (event.target.nodeName === "IMG") {
     const source = event.target.dataset.source;
-    const instance = basicLightbox.create(`<img src="${source}">`);
-    instance.show();
+    photo = basicLightbox.create(`<img src="${source}">`, {
+      onShow: () => {
+        document.addEventListener("keydown", onEscapeClick);
+        document.body.style.overflow = "hidden";
+      },
+      onClose: () => {
+        document.removeEventListener("keydown", onEscapeClick);
+        document.body.style.overflow = "visible";
+      },
+    });
+    photo.show();
   }
 });
+
+function onEscapeClick(event) {
+  if (event.code !== "Escape") return;
+  closeModalBtnClick();
+}
+
+function closeModalBtnClick() {
+  photo.close();
+}
