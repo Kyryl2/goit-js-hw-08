@@ -108,9 +108,5 @@ ulList.addEventListener("click", (event) => {
 
 function onEscapeClick(event) {
   if (event.code !== "Escape") return;
-  closeModalBtnClick();
-}
-
-function closeModalBtnClick() {
   photo.close();
 }
